@@ -1,61 +1,176 @@
-# Sistem Informasi Desa Tanjungsari
+<div align="center">
 
-Website resmi Desa Tanjungsari, Kecamatan Jenangan — modern, cepat, mobile-first, SEO-friendly.
+# 🏘 Sistem Informasi Desa Tanjungsari
 
-## Tech Stack
+Website Resmi Desa Berbasis AI — Cepat, Mobile-First, SEO-Friendly
 
-- **Next.js 14** (App Router) + TypeScript
-- **Tailwind CSS** + shadcn/ui-style components
-- **Prisma** + **MySQL**
-- **Auth.js (NextAuth v4)** — login admin
-- **Google Gemini API (AI Studio, free tier)** — AI Assistant untuk ringkasan berita + SEO metadata
-- **Cloudinary** — hosting gambar (aman dipakai di Railway karena filesystem-nya ephemeral)
+[Live Demo](https://desatanjungsari.id)
 
-## 1. Instalasi
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![React](https://img.shields.io/badge/React-18-blue)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
+![MySQL](https://img.shields.io/badge/MySQL-Database-blue)
+![Railway](https://img.shields.io/badge/Deploy-Railway-purple)
+![Gemini AI](https://img.shields.io/badge/AI-Gemini-orange)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-Media-blue)
+![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red)
 
-```bash
-npm install
-cp .env.example .env
+</div>
+
+---
+
+# 📖 About
+
+Sistem Informasi Desa Tanjungsari adalah website resmi desa yang dirancang untuk menyajikan informasi layanan warga, berita, dan potensi desa secara cepat, rapi, dan mudah ditemukan di internet.
+
+Website ini menggabungkan:
+
+- AI Assistant untuk scraping & generate konten otomatis
+- Dashboard Admin Modern
+- Manajemen Berita & Pengumuman
+- Manajemen UMKM & Potensi Desa
+- Galeri & Layanan Desa
+- SEO Otomatis (Sitemap, RSS, Open Graph)
+- Global Search
+- Statistik Kunjungan
+
+Dikembangkan menggunakan Next.js App Router dengan Prisma ORM dan MySQL sehingga mudah dikembangkan untuk kebutuhan desa lain.
+
+---
+
+# ✨ Key Features
+
+## Publik
+
+- Beranda (hero, search, pengumuman, layanan populer, berita terbaru, statistik, UMKM unggulan, galeri)
+- Profil Desa
+- Perangkat Desa
+- Struktur Organisasi
+- Layanan Desa
+- Potensi Desa
+- UMKM
+- Galeri
+- Berita
+- Pengumuman
+- Kontak
+- Global Search (`/cari`)
+- Dark Mode
+- Mobile-First & Responsive
+
+---
+
+## Admin
+
+- Dashboard
+- CRUD Berita, Pengumuman, Layanan, UMKM, Galeri, Perangkat Desa
+- Draft / Publish per konten
+- SEO Metadata per-konten
+- Upload gambar (Cloudinary)
+- Manajemen Admin (Admin Users)
+- Statistik Pengunjung
+- Pengaturan Situs
+- **AI Assistant** (4 mode sumber konten):
+  - Manual Link — tempel URL, AI ringkas & buatkan SEO
+  - Auto Search — cek ulang sumber resmi terdaftar
+  - Scraper WordPress — ambil otomatis dari situs WP resmi (0 kuota AI)
+  - Search Engine — cari berita baru via Tavily
+- Review flow (`NEEDS_REVIEW` → Approve & Publish / Draft)
+- Approve All & Auto-Publish per sumber
+- Kuota Gemini & Search termonitor
+
+---
+
+# 🚀 Tech Stack
+
+| Frontend | Next.js 14 (App Router) + TypeScript |
+|-----------|------------|
+| Backend | Next.js API Route |
+| Database | MySQL |
+| ORM | Prisma |
+| Authentication | Auth.js (NextAuth v4) |
+| AI | Google Gemini (AI Studio) |
+| Search Engine | Tavily API |
+| Storage | Cloudinary |
+| Styling | Tailwind CSS + shadcn/ui-style components |
+| Hosting | Railway |
+
+---
+
+# 🏗 System Architecture
+
+```text
+Warga / Pengunjung
+
+↓
+
+Halaman Publik (Next.js)
+
+↓
+
+API Route
+
+↓
+
+Prisma ORM
+
+↓
+
+MySQL Database
+
+↓
+
+Cloudinary / Gemini / Tavily
+
+↓
+
+Response
 ```
 
-Isi `.env` (atau isi lewat tab **Variables** kalau deploy di Railway):
-- `DATABASE_URL` → koneksi MySQL kamu (di Railway: klik "Add Reference" ke service MySQL)
-- `NEXTAUTH_SECRET` → generate dengan `openssl rand -base64 32`
-- `GEMINI_API_KEY` → API key GRATIS dari https://aistudio.google.com/apikey
-- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` → dari https://console.cloudinary.com (free tier: 25GB storage)
+---
 
-## 2. Setup Database
+# 🤖 AI Assistant Flow
 
-```bash
-npm run db:push      # sinkronkan schema Prisma ke MySQL
-npm run db:seed       # buat admin pertama + data contoh
+```text
+Admin
+
+↓
+
+Pilih Sumber (Manual Link / Auto Search / WordPress / Search Engine)
+
+↓
+
+Scraping + Ekstraksi Konten
+
+↓
+
+Gemini AI (Ringkasan + SEO Metadata)
+
+↓
+
+AiJob (status: NEEDS_REVIEW)
+
+↓
+
+Admin Review & Edit
+
+↓
+
+Approve & Publish / Simpan Draft
 ```
 
-Login admin default (**ganti password setelah login pertama**):
-```
-Email    : admin@desatanjungsari.id
-Password : admin123
-```
+---
 
-## 3. Jalankan
-
-```bash
-npm run dev
-```
-
-- Situs publik: `http://localhost:3000`
-- Dashboard admin: `http://localhost:3000/admin/login`
-
-## Struktur Folder
+# 📂 Folder Structure
 
 ```
 src/
 ├── app/
 │   ├── (public pages)/       # beranda, profil-desa, layanan, umkm, dst.
 │   ├── admin/
-│   │   ├── login/            # halaman login (di luar auth guard)
-│   │   └── (dashboard)/      # semua halaman admin (dilindungi middleware)
-│   │       ├── ai-assistant/ # AI scraping & review
+│   │   ├── login/
+│   │   └── (dashboard)/
+│   │       ├── ai-assistant/
 │   │       ├── berita/
 │   │       ├── pengumuman/
 │   │       ├── layanan/
@@ -63,135 +178,519 @@ src/
 │   │       ├── galeri/
 │   │       ├── perangkat/
 │   │       └── pengaturan/
-│   ├── api/                  # semua API routes (REST, dipakai admin & AI)
-│   ├── sitemap.ts            # sitemap otomatis
+│   ├── api/                  # semua API routes
+│   ├── sitemap.ts
 │   ├── robots.ts
-│   └── rss.xml/route.ts      # RSS feed berita
+│   └── rss.xml/route.ts
 ├── components/
-│   ├── ui/                   # button, card, input, badge (shadcn-style)
-│   ├── layout/                # navbar, footer
-│   ├── home/                  # section-section beranda
-│   ├── admin/                 # sidebar, topbar, form editor, uploader
-│   └── shared/                 # theme provider, auth provider, visit tracker
+│   ├── ui/
+│   ├── layout/
+│   ├── home/
+│   ├── admin/
+│   └── shared/
 ├── lib/
-│   ├── prisma.ts               # Prisma client singleton
-│   ├── auth.ts                 # konfigurasi Auth.js
-│   ├── ai-assistant.ts         # logic scraping + panggil Claude API
+│   ├── prisma.ts
+│   ├── auth.ts
+│   ├── ai-assistant.ts
 │   └── utils.ts
-└── middleware.ts               # proteksi route /admin
+└── middleware.ts
 
 prisma/
-├── schema.prisma               # semua model database
-└── seed.ts                     # data awal
+├── schema.prisma
+└── seed.ts
 ```
 
-## Cara Kerja AI Assistant
+---
 
-Sesuai workflow yang diminta, ada **2 opsi sumber**, keduanya dikelola dari
-`/admin/ai-assistant`:
+# 🗄 Database Overview
 
-1. **Opsi 1 — Manual Link**: admin tempel URL berita/pengumuman resmi
-   (misalnya website kecamatan). AI (`POST /api/ai/scrape` dengan
-   `type: "MANUAL_LINK"`) akan fetch halaman, ekstrak teks utama, lalu
-   kirim ke Gemini API (model `gemini-3.1-flash-lite` via env `GEMINI_MODEL`,
-   gratis di AI Studio) untuk diringkas + dibuatkan judul SEO, meta
-   description, tag, dan slug.
+Main Tables
 
-2. **Opsi 2 — Auto Search**: admin mendaftarkan sumber resmi ke tabel
-   `AiSource` (nama + URL, tipe `AUTO_SEARCH`). Admin tinggal klik
-   **"Cek Sekarang"** pada sumber yang diinginkan, sistem akan fetch
-   sumber tersebut dan proses sama seperti opsi 1.
+- users
+- activity_logs
+- seo_meta
+- berita
+- pengumuman
+- layanan
+- perangkat_desa
+- potensi_desa
+- umkm
+- galeri
+- profil_desa
+- statistik
+- kontak
+- ai_source
+- ai_job
+- search_quota
+- page_visit
+- settings
 
-Setiap proses menghasilkan `AiJob` berstatus `NEEDS_REVIEW` — **tidak ada
-yang otomatis publish**. Admin wajib review & edit dulu (judul, ringkasan,
-meta description, tag) di dashboard, baru pilih **Approve & Publish** atau
-**Simpan sebagai Draft**. Ini sesuai step 4–5 di spec awal (Admin review →
-Publish).
+---
 
-> Ganti model lewat env `GEMINI_MODEL` bila perlu — cek daftar model aktif
-> terbaru di https://ai.google.dev/gemini-api/docs/models (model versi 2.0
-> dan 2.5 sudah mulai di-deprecate untuk API key baru, per pertengahan 2026).
-> Ekstraksi konten pakai heuristik sederhana (`cheerio`, ambil semua `<p>`
-> yang cukup panjang) — untuk sumber yang strukturnya rumit, sesuaikan
-> selector di `extractFromUrl()`.
+# ⭐ Highlights
 
-## Fitur yang Sudah Tersedia
+✔ AI Powered Content Generation
 
-- ✅ 10 halaman publik sesuai spec (Beranda, Profil Desa, Perangkat Desa,
-  Layanan, Potensi Desa, UMKM, Galeri, Kontak, Pengumuman, Berita)
-- ✅ Beranda dengan hero, search, pengumuman, layanan populer, berita
-  terbaru, statistik, UMKM unggulan, galeri, footer lengkap
-- ✅ Dashboard admin: CRUD semua konten, upload gambar, draft/publish,
-  SEO metadata per-konten, ringkasan statistik pengunjung, pengaturan
-- ✅ AI Assistant 2 opsi sumber + review flow
-- ✅ Global search (`/cari?q=`)
-- ✅ Sitemap otomatis (`/sitemap.xml`), robots.txt, RSS feed (`/rss.xml`)
-- ✅ Open Graph metadata di tiap halaman
-- ✅ Lazy loading gambar (Next/Image)
-- ✅ Dark mode (class-based, toggle di navbar)
-- ✅ Mobile-first, rounded card, shadow halus, animasi ringan
+✔ Multi-Source Scraping (Manual, Auto Search, WordPress, Search Engine)
 
-## Yang Perlu Kamu Lengkapi Sendiri
+✔ Beautiful Modern UI
 
-Karena kamu bilang **data diandalkan dari scraping saja** (bukan
-perangkat desa yang isi manual), berikut yang masih perlu kamu putuskan/atur:
+✔ Mobile-First Design
 
-1. **Sumber resmi untuk AI Assistant** — daftarkan minimal 2 URL resmi
-   (kecamatan/kabupaten/desa) lewat dashboard AI Assistant.
-2. **Konten awal** — profil desa, kontak, statistik, perangkat desa perlu
-   diisi minimal sekali lewat `/admin/pengaturan` dan halaman terkait
-   (kalau datanya mau discrape juga, bisa dibuatkan job AI khusus serupa
-   pola di `src/lib/ai-assistant.ts`, tinggal extend).
-3. **Logo, favicon, warna brand** — saat ini pakai skema hijau default
-   di `tailwind.config.ts` (`primary-*`) dan `globals.css` (`--primary`).
-4. **Domain & hosting** — set `NEXT_PUBLIC_SITE_URL` sesuai domain final
-   untuk sitemap/OG/canonical URL yang benar.
-5. Untuk **AUTO_SEARCH murni tanpa URL tetap** (AI cari bebas dari
-   internet berdasarkan tanggal, bukan dari daftar sumber tetap), tambahkan
-   tool web-search di endpoint `/api/ai/scrape` — saat ini opsi 2
-   diimplementasikan sebagai "cek ulang sumber terdaftar", yang lebih
-   aman dan terkontrol untuk situs resmi pemerintah desa.
-6. **Scraper situs WordPress (Opsi 3, 0 kuota AI)** dan **cari berita
-   baru via search engine (Opsi 4, hemat query)** ada di halaman
-   AI Assistant admin. Schema Prisma berubah untuk fitur ini (`SourceType`
-   tambah `WP_JSON`/`SEARCH_ENGINE`, tabel baru `search_quota`) — **jalankan
-   ulang `npx prisma db push` setelah deploy update ini**. Opsi 4 butuh
-   `TAVILY_API_KEY` (gratis 1.000 kredit/bulan, daftar di
-   https://app.tavily.com — lihat `.env.example`); tanpa itu, Opsi 3
-   (WordPress) tetap jalan normal karena tidak butuh API key tambahan.
-   *(Catatan: bukan pakai Google Custom Search — API itu sudah ditutup
-   untuk pelanggan baru per 2026.)*
-7. **AI Assistant sekarang multi-tab + auto-publish + gambar ikut ke-scrape.**
-   Perubahan di update ini:
-   - Scraper WordPress (`wp-scraper.ts`) sekarang ambil **gambar unggulan
-     & gambar di dalam post** (lewat `_embed`, 0 request tambahan) dan
-     **mengurutkan hasil scrape kronologis berdasarkan tanggal post ASLI**
-     (bukan urutan pagination). Tanggal publish final di Berita/Pengumuman
-     juga ikut memakai tanggal asli ini, bukan waktu admin klik approve.
-   - AI Assistant sekarang bisa mengisi tab **Berita, UMKM, Galeri,
-     Perangkat Desa, dan Pengumuman** — pilih tab-nya di bagian atas
-     halaman `/admin/ai-assistant`, atau isi lewat widget "AI Assistant"
-     kecil yang ada di masing-masing tab tersebut (lengkap dengan info
-     kuota Gemini/search & jumlah item yang perlu direview).
-   - Ada tombol **"Setujui Semua Sekarang"** untuk approve + publish semua
-     draft yang `NEEDS_REVIEW` sekaligus (bukan satu-satu), dan opsi
-     **"Otomatis publish"** per sumber (`autoApprove`) supaya hasil scrape
-     langsung tayang tanpa admin perlu buka dashboard sama sekali.
-   - Schema Prisma berubah lagi (enum `AiContentType` baru; kolom baru di
-     `AiSource`/`AiJob`/`Berita` untuk gambar, tanggal asli, & tipe konten)
-     — **jalankan ulang `npx prisma db push` setelah deploy update ini.**
+✔ Dark Mode
 
-## Deploy ke Railway
+✔ SEO Otomatis (Sitemap, Robots, RSS, Open Graph)
 
-1. Buat service baru dari repo GitHub kamu.
-2. Tambah `+ New` → `Database` → `MySQL` di project yang sama.
-3. Di service Next.js, tab **Variables**, isi semua env var dari
-   `.env.example` (untuk `DATABASE_URL`, klik "Add Reference" ke service
-   MySQL biar otomatis konek).
-4. Setelah deploy pertama sukses, buka tab **Shell** di service, jalankan:
-   ```bash
-   npx prisma db push
-   npm run db:seed
-   ```
-5. Gambar di-upload otomatis ke Cloudinary (bukan disk lokal), jadi aman
-   dari redeploy Railway yang ephemeral filesystem-nya.
+✔ Global Search
+
+✔ Review Flow Sebelum Publish
+
+✔ Auto-Publish Opsional
+
+✔ Statistik Kunjungan
+
+✔ Railway Ready
+
+---
+
+# 🌍 Live Demo
+
+https://desatanjungsari.id
+
+---
+
+# 🔌 API Overview
+
+Menyediakan REST API internal menggunakan Next.js Route Handlers.
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /api/berita | CRUD | Manajemen Berita |
+| /api/pengumuman | CRUD | Manajemen Pengumuman |
+| /api/layanan | CRUD | Manajemen Layanan |
+| /api/umkm | CRUD | Manajemen UMKM |
+| /api/galeri | CRUD | Manajemen Galeri |
+| /api/perangkat | CRUD | Manajemen Perangkat Desa |
+| /api/profil-desa | GET/PUT | Profil Desa |
+| /api/kontak | GET/PUT | Data Kontak |
+| /api/search | GET | Global Search |
+| /api/settings | GET/PUT | Pengaturan Situs |
+| /api/stats/visit | POST | Catat Kunjungan |
+| /api/upload | POST | Upload Gambar (Cloudinary) |
+| /api/admin-users | CRUD | Manajemen Admin |
+| /api/account/password | PUT | Ganti Password |
+| /api/auth/[...nextauth] | * | Auth.js (Login Admin) |
+| /api/ai/scrape | POST | AI Scrape — Manual Link |
+| /api/ai/scrape-wp | POST | AI Scrape — WordPress |
+| /api/ai/search | POST | AI Scrape — Search Engine |
+| /api/ai/summarize | POST | Ringkas + SEO via Gemini |
+| /api/ai/generate-tags | POST | Generate Tag Otomatis |
+| /api/ai/sources | CRUD | Manajemen Sumber AI |
+| /api/ai/check-source | POST | Cek Ulang Sumber Terdaftar |
+| /api/ai/jobs | GET | Daftar AiJob (Review Queue) |
+| /api/ai/approve-all | POST | Approve & Publish Semua Sekaligus |
+| /api/ai/quota | GET | Sisa Kuota Gemini & Search |
+
+---
+
+# ⚙ Environment Variables
+
+Create `.env`
+
+```env
+# Database
+DATABASE_URL=
+
+# Auth.js
+NEXTAUTH_URL=
+NEXTAUTH_SECRET=
+
+# Site
+NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_SITE_NAME=
+NEXT_PUBLIC_KECAMATAN=
+NEXT_PUBLIC_KABUPATEN=
+
+# AI Assistant (Gemini)
+GEMINI_API_KEY=
+GEMINI_MODEL=
+GEMINI_RPM_LIMIT=
+GEMINI_RPD_LIMIT=
+
+# Search Engine (Tavily, opsional)
+TAVILY_API_KEY=
+SEARCH_ENGINE_MONTHLY_LIMIT=
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+MAX_UPLOAD_SIZE_MB=
+```
+
+---
+
+# 📦 Installation
+
+Clone repository
+
+```bash
+git clone https://github.com/USERNAME/website-desa.git
+```
+
+Masuk folder project
+
+```bash
+cd website-desa
+```
+
+Install dependency
+
+```bash
+npm install
+```
+
+Copy environment
+
+```bash
+cp .env.example .env
+```
+
+Setup database
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+Development
+
+```bash
+npm run dev
+```
+
+Production
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+# 🔑 Default Admin Login
+
+Login pertama kali (**wajib ganti password setelah login**):
+
+```
+Email    : admin@desatanjungsari.id
+Password : admin123
+```
+
+---
+
+# 🚀 Railway Deployment
+
+1. Push project ke GitHub
+
+2. Login Railway
+
+3. New Project → Deploy from GitHub
+
+4. Tambah `+ New` → `Database` → `MySQL` di project yang sama
+
+5. Tambahkan seluruh Environment Variables (`DATABASE_URL` klik "Add Reference" ke service MySQL)
+
+6. Setelah deploy pertama sukses, buka tab **Shell**, jalankan:
+
+```bash
+npx prisma db push
+npm run db:seed
+```
+
+7. Selesai — gambar otomatis ke Cloudinary, aman dari ephemeral filesystem Railway
+
+---
+
+# 🤖 Gemini AI Setup
+
+1. Buat API Key gratis di Google AI Studio
+
+```
+https://aistudio.google.com/apikey
+```
+
+2. Tambahkan ke environment
+
+```
+GEMINI_API_KEY
+GEMINI_MODEL
+```
+
+3. AI digunakan untuk
+
+- Ringkasan Berita & Pengumuman
+- SEO Metadata (judul, meta description, tag, slug)
+- Generate Tag Otomatis
+
+> Model default `gemini-3.1-flash-lite`. Cek daftar model aktif terbaru di
+> https://ai.google.dev/gemini-api/docs/models — model versi 2.0 dan 2.5
+> sudah mulai di-deprecate untuk API key baru per pertengahan 2026.
+
+---
+
+# 🔎 Tavily Search Setup (Opsional)
+
+Digunakan untuk mode AI Assistant "Search Engine" (cari berita baru yang belum ada di web sendiri).
+
+1. Daftar gratis di https://app.tavily.com (1.000 kredit/bulan, tanpa kartu kredit)
+
+2. Tambahkan
+
+```
+TAVILY_API_KEY
+SEARCH_ENGINE_MONTHLY_LIMIT
+```
+
+> Tanpa API key ini, mode Search Engine tidak aktif — mode Manual Link,
+> Auto Search, dan Scraper WordPress tetap berjalan normal.
+
+---
+
+# ☁ Cloudinary Setup
+
+Digunakan untuk
+
+- Gambar Berita, Pengumuman, Galeri, UMKM
+- Foto Perangkat Desa
+
+Environment
+
+```
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+```
+
+---
+
+# 🧠 Cara Kerja AI Assistant
+
+Ada 4 mode sumber konten, semua dikelola dari `/admin/ai-assistant`:
+
+1. **Manual Link** — admin tempel URL berita/pengumuman resmi. AI fetch halaman, ekstrak teks utama (`cheerio`), lalu kirim ke Gemini untuk diringkas + dibuatkan judul SEO, meta description, tag, dan slug.
+
+2. **Auto Search** — admin mendaftarkan sumber resmi ke tabel `AiSource`. Klik **"Cek Sekarang"**, sistem fetch ulang sumber tersebut dan proses sama seperti Manual Link.
+
+3. **Scraper WordPress** — ambil otomatis dari situs WordPress resmi lewat `_embed` (termasuk gambar unggulan & gambar dalam post), diurutkan kronologis berdasarkan tanggal post asli. Tidak memakai kuota AI.
+
+4. **Search Engine** — cari berita baru berdasarkan tanggal via Tavily API, untuk sumber yang belum terdaftar tetap.
+
+Setiap proses menghasilkan `AiJob` berstatus `NEEDS_REVIEW` — tidak ada yang otomatis publish kecuali opsi **"Otomatis publish"** (`autoApprove`) diaktifkan per sumber. Ada juga tombol **"Setujui Semua Sekarang"** untuk approve + publish semua draft sekaligus. AI Assistant mendukung tab **Berita, UMKM, Galeri, Perangkat Desa, dan Pengumuman**.
+
+---
+
+# 🔒 Security
+
+### Authentication
+
+- Auth.js (NextAuth v4)
+- Secure Session
+- HTTP Only Cookie
+- Password Hash (bcryptjs)
+
+### Authorization
+
+- Middleware guard di `/admin/*`
+- Manajemen multi-admin
+
+### AI
+
+- Server Side API
+- API Key Hidden
+- Rate Limiter Internal (RPM & RPD di bawah limit resmi Google)
+- Kuota Search Engine dibatasi otomatis per bulan
+
+### Database
+
+- Prisma ORM
+- Parameterized Query
+
+---
+
+# ⚡ Performance
+
+- Next.js App Router
+
+- Image Optimization (Next/Image, lazy loading)
+
+- Server Components
+
+- Sitemap Otomatis
+
+- Mobile-First, rounded card, shadow halus, animasi ringan (Framer Motion)
+
+---
+
+# ❓ FAQ
+
+### AI tidak bekerja?
+
+Periksa `GEMINI_API_KEY` dan cek apakah `GEMINI_MODEL` masih aktif di daftar model Google AI Studio.
+
+---
+
+### Mode Search Engine tidak muncul?
+
+Periksa `TAVILY_API_KEY`, dan pastikan kuota bulanan (`SEARCH_ENGINE_MONTHLY_LIMIT`) belum habis.
+
+---
+
+### Upload gambar gagal?
+
+Periksa konfigurasi Cloudinary (`CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`).
+
+---
+
+### Build gagal?
+
+Jalankan
+
+```bash
+npm install
+```
+
+kemudian
+
+```bash
+npx prisma generate
+```
+
+---
+
+### Ada perubahan schema Prisma setelah update, harus apa?
+
+Jalankan ulang
+
+```bash
+npx prisma db push
+```
+
+di tab Shell Railway (atau lokal) setelah deploy update terkait AI Assistant.
+
+---
+
+# 🛣 Roadmap
+
+### Completed
+
+- 10 Halaman Publik (Beranda, Profil Desa, Perangkat Desa, Layanan, Potensi Desa, UMKM, Galeri, Kontak, Pengumuman, Berita)
+
+- Dashboard Admin Lengkap (CRUD semua konten)
+
+- AI Assistant 4 Mode Sumber
+
+- Review Flow & Auto-Publish
+
+- Global Search
+
+- Sitemap, Robots, RSS Feed
+
+- Open Graph Metadata
+
+- Dark Mode
+
+- Statistik Kunjungan
+
+---
+
+### Future
+
+- Progressive Web App
+
+- Notifikasi WhatsApp/Telegram untuk pengumuman baru
+
+- Multi Language
+
+- Export Statistik
+
+- Multi Desa (multi-tenant)
+
+---
+
+# 🤝 Contributing
+
+Saat ini proyek bersifat proprietary.
+
+Pull Request dan kontribusi eksternal belum dibuka.
+
+Jika ingin bekerja sama atau menggunakan sistem ini untuk desa lain, silakan hubungi pemilik proyek.
+
+---
+
+# 📜 License
+
+Copyright © 2026 Zen.
+
+All Rights Reserved.
+
+This software is proprietary.
+
+You may NOT:
+
+- Copy source code
+- Redistribute
+- Modify
+- Sell
+- Re-upload
+- Commercialize
+
+without written permission.
+
+---
+
+# 📞 Contact
+
+Developer
+
+**Zen**
+
+---
+
+# ❤️ Credits
+
+Built with
+
+- Next.js
+
+- React
+
+- TypeScript
+
+- Prisma
+
+- MySQL
+
+- Auth.js
+
+- Google Gemini
+
+- Tavily
+
+- Cloudinary
+
+- Railway
+
+---
+
+<div align="center">
+
+# ⭐ Sistem Informasi Desa Tanjungsari
+
+Website Resmi Desa Berbasis AI
+
+Built with ❤️ by Zen
+
+© 2026 All Rights Reserved
+
+</div>
