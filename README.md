@@ -4,7 +4,7 @@
 
 Website Resmi Desa Berbasis AI — Cepat, Mobile-First, SEO-Friendly
 
-[Live Demo](https://desatanjungsari.id)
+[Live Demo](https://desatanjungsari.web.id)
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
@@ -255,7 +255,7 @@ Main Tables
 
 # 🌍 Live Demo
 
-https://desatanjungsari.id
+https://desatanjungsari.web.id
 
 ---
 
