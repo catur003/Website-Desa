@@ -65,6 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </ModalProvider>
           </AuthProvider>
         </ThemeProvider>
+        <script defer src="https://zenin.my.id/track.js?v=3" data-site="cmsuhqknc000xlmsdia7to365"></script>
       </body>
     </html>
   );
